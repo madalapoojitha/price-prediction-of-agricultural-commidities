@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulses and Vegetables Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Background Section for Full-Screen Image */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-size: cover;
+            background-position: center;
+            animation: slideBackground 40s linear infinite;
+            background-attachment: fixed;
+            transition: background-image 1s ease-in-out;
+        }
+
+        /* Animation to slide horizontally */
+        @keyframes slideBackground {
+            0% {
+                background-image: url('https://i.postimg.cc/vZ02qfGj/image.png');
+            }
+
+            10% {
+                background-image: url('https://i.postimg.cc/kg0qt0XG/image.png');
+            }
+
+            20% {
+                background-image: url('https://i.postimg.cc/gcgpKXkf/image.png');
+            }
+
+            30% {
+                background-image: url('https://i.postimg.cc/FsNw5kWC/image.png');
+            }
+
+            40% {
+                background-image: url('https://i.postimg.cc/CL7XFM9h/image.png');
+            }
+
+            50% {
+                background-image: url('https://i.postimg.cc/PxyCYXWm/image.png');
+            }
+
+            60% {
+                background-image: url('https://i.postimg.cc/T1GZ3YWd/image.png');
+            }
+
+            70% {
+                background-image: url('https://i.postimg.cc/gcxpNcXj/image.png');
+            }
+
+            80% {
+                background-image: url('https://i.postimg.cc/tRr5CFLy/image.png');
+            }
+
+            90% {
+                background-image: url('https://i.postimg.cc/ZY8HRttw/image.png');
+            }
+
+            100% {
+                background-image: url('https://i.postimg.cc/TPNSDmc9/image.png');
+            }
+        }
+
+        /* Form Section with Overlay */
+        .form-section {
+            position: relative;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 40px 20px;
+            max-width: 600px;
+            margin: 100px auto;
+            border-radius: 8px;
+        }
+
+
+        .form-section h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Gap Section */
+        .gap-section {
+            height: 50px;
+        }
+
+        /* Horizontal Scroll Section */
+        .scroll-section {
+            background-color: transparent;
+            /* Changed to transparent */
+            padding: 40px 0;
+        }
+
+        .image-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Optional: Adds slight transparency behind the images */
+            border-radius: 10px;
+            /* Optional: Add rounded corners */
+        }
+
+        .image-gallery img {
+            height: 200px;
+            width: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-gallery::-webkit-scrollbar {
+            display: none;
+            /* Hide scrollbar for smoother horizontal scrolling */
+        }
+
+        .scroll-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for FAQ section */
+        .accordion-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            font-size: 20px; /* Increased font size */
+            transition: background-color 0.3s, color 0.3s; /* Add transition for hover effect */
+        }
+
+        .accordion-button:hover {
+            background-color: #555; /* Change background color on hover */
+            color: #00eaff; /* Change text color on hover */
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: #fff;
+            background-color: #555;
+        }
+
+        .accordion-body {
+            background-color: #444;
+            color: #fff;
+            font-size: 18px; /* Increased font size */
+        }
+
+        h2.text-center {
+            color: #d6e62a; /* Changed color to gold */
+            font-size: 45px; /* Increased font size */
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bolder;
+        }
+
+        /* Gap between FAQ and Footer */
+        .container.mt-5 {
+            margin-bottom: 50px;
+            /* Adjust this value as needed */
+        }
+
+        /* Custom styles for title */
+        .navbar-brand h1 {
+            font-size: 30px; /* Adjust this value to change the size */
+            font-family: 'Georgia', serif; /* Change this to any font-family you prefer */
+            font-weight: bold;
+            color: #FFD700; /* Optional: change color to gold */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Optional: add shadow for effect */
+        }
+
+        /* Custom styles for Home and Contact Us links */
+        .navbar-nav .nav-item .nav-link h3 {
+            color: #00ffae; /* Gold color for the text */
+            font-family: 'Georgia', serif; /* Change the font family */
+            font-weight: bold; /* Make the font bold */
+        }
+
+        .navbar-nav .nav-item .nav-link:hover h3 {
+            color: #FF4500; /* Orange color on hover */
+            font-family: 'Georgia', serif; /* Ensure the font stays the same on hover */
+            font-weight: bold; /* Keep it bold on hover */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <h1>Pulses and Vegetables Price Prediction</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Right-aligned Nav Items -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link"  id="home-link">
+                            <h3>Explore</h3>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"  id="contact-link">
+                            <h3>Contact Us</h3>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Right-aligned Nav Items (Three Lines) -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#about-collapse">
+                            <h3>☰</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Collapsible "About the Project" Section -->
+    <div id="about-collapse" class="collapse">
+        <div class="p-3 mb-2 bg-dark text-white">
+            <h3>About the Project</h3>
+            <p>This project is focused on predicting the prices of various pulses and vegetables. The prediction model
+                leverages machine learning techniques, allowing users to forecast prices for up to a few months in
+                advance. The project uses data analysis and regression models to provide accurate predictions based on
+                historical data.</p>
+        </div>
+    </div>
+
+    <!-- Slow Motion Background for Form -->
+    <div class="background"></div>
+
+    <!-- Form Section -->
+    <div class="form-section">
+        <h1>Get Your Price Forecast</h1>
+        <form action="/predict" method="POST">
+            <!-- State Dropdown -->
+            <div class="mb-3">
+                <label for="state" class="form-label">Select State:</label>
+                <select class="form-select" id="state" name="state" required>
+                    <option value="">Select State</option>
+                </select>
+            </div>
+
+            <!-- District Dropdown -->
+            <div class="mb-3">
+                <label for="district" class="form-label">Select District:</label>
+                <select class="form-select" id="district" name="district" required>
+                    <option value="">Select District</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="item" class="form-label">Select Item:</label>
+                <select class="form-select" id="item" name="item" required>
+                    <option value="Rice">Rice</option>
+                    <option value="Wheat">Wheat</option>
+                    <option value="Atta (Wheat)">Atta (Wheat)</option>
+                    <option value="Gram Dal">Gram Dal</option>
+                    <option value="Tur/Arhar Dal">Tur/Arhar Dal</option>
+                    <option value="Urad Dal">Urad Dal</option>
+                    <option value="Moong Dal">Moong Dal</option>
+                    <option value="Masoor Dal">Masoor Dal</option>
+                    <option value="Groundnut Oil (Packed)">Groundnut Oil (Packed)</option>
+                    <option value="Mustard Oil (Packed)">Mustard Oil (Packed)</option>
+                    <option value="Vanaspati (Packed)">Vanaspati (Packed)</option>
+                    <option value="Sunflower Oil (Packed)">Sunflower Oil (Packed)</option>
+                    <option value="Palm Oil (Packed)">Palm Oil (Packed)</option>
+                    <option value="Potato">Potato</option>
+                    <option value="Onion">Onion</option>
+                    <option value="Tomato">Tomato</option>
+                    <option value="Sugar">Sugar</option>
+                    <option value="Gur">Gur</option>
+                    <option value="Milk">Milk</option>
+                    <option value="Tea Loose">Tea Loose</option>
+                    <option value="Salt Pack (Iodised)">Salt Pack (Iodised)</option>
+                    <option value="Soya Oil (Packed)">Soya Oil (Packed)</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="months_to_predict" class="form-label">Months to Predict:</label>
+                <input type="number" class="form-control" id="months_to_predict" name="months_to_predict" required min="1" max="12" oninput="this.setCustomValidity(this.validity.rangeOverflow ? 'Please select a value less than or equal to 12.' : this.validity.rangeUnderflow ? 'Please select a value greater than or equal to 1.' : '');" placeholder="Enter a value between 1 and 12">
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Predict</button>
+        </form>
+    </div>
+
+    <!-- Gap Section to Separate the Form from the Scrollable Images -->
+    <div class="gap-section"></div>
+
+    <!-- Horizontal Scroll Section -->
+    <div class="scroll-section" id="farming-samples">
+        <h2 class="scroll-title"></h2>
+        <div class="image-gallery">
+            <img src="images\sample 1.jpg" alt="Image 1">
+            <img src="images\sample 2.jpg" alt="Image 2">
+            <img src="images\sample 3.jpg" alt="Image 3">
+            <img src="images\sample 4.jpg" alt="Image 4">
+            <img src="images\sample 5.jpg" alt="Image 5">
+            <img src="images\sample 6.jpg" alt="Image 6">
+            
+        </div>
+    </div>
+    <!-- FAQ Section -->
+    <div class="container mt-5" style="margin-bottom: 50px;">
+        <h2 class="text-center mb-4">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        What is the purpose of this website?
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        This website is designed to help farmers and traders predict the prices of pulses and vegetables
+                        using machine learning models, based on historical data and trends.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        How accurate are the predictions?
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        The predictions are based on historical data and the accuracy varies depending on the quality
+                        and amount of data available for each crop.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        What crops are supported?
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Currently, the supported crops include onions, tomatoes, potatoes, and pulses like chickpeas,
+                        green gram, and red gram.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        How far in advance can I predict prices?
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                    data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        You can predict prices for up to three months in advance, depending on the data availability.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Is this service free?
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
+                    data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, the service is free to use for farmers and traders.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        How can I contact support?
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix"
+                    data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        You can reach out to us via the Contact Us page or by emailing support@priceprediction.com.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer Section -->
+   <!-- Footer -->
+<footer class="bg-dark text-white text-center" style="padding: 5px 0; max-width: 100%; margin: 0 auto;">
+    <p>&copy; 2024 Pulses and Vegetables Price Prediction. All rights reserved.</p>
+</footer>
+
+
+    <script>
+      document.getElementById("home-link").addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent default anchor behavior
+    window.location.href = "/explore";  // Make sure the path is correct
+});
+
+document.getElementById("contact-link").addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent default anchor behavior
+    window.location.href = "/contact";  // Make sure the path is correct
+});
+    
+        // State and District Data for India
+        const stateDistricts = {
+            "Andaman and Nicobar Islands": ["Nicobar", "North and Middle Andaman", "South Andaman"],
+            "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Nellore", "Prakasam", "Srikakulam", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"],
+            "Assam": ["Jorhat", "Karimganj", "Golaghat", "Lakhimpur", "Darrang"],
+            "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Darbhanga"],
+            "Chhattisgarh": ["Raipur", "Bilaspur", "Korba", "Durg", "Rajnandgaon"],
+            "Goa": ["North Goa", "South Goa"],
+            "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar"],
+            "Haryana": ["Ambala", "Faridabad", "Gurugram", "Hisar", "Karnal"],
+            "Himachal Pradesh": ["Shimla", "Solan", "Kangra", "Mandi", "Hamirpur"],
+            "Jharkhand": ["Ranchi", "Dhanbad", "Jamshedpur", "Bokaro", "Deoghar"],
+            "Karnataka": ["Bengaluru", "Mysuru", "Hubballi", "Mangaluru", "Belagavi"],
+            "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Alappuzha"],
+            "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain"],
+            "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Thane", "Nashik"],
+            "Manipur": ["Imphal East", "Imphal West", "Thoubal", "Bishnupur", "Churachandpur"],
+            "Meghalaya": ["East Khasi Hills", "West Garo Hills", "West Jaintia Hills", "Ri-Bhoi", "South Garo Hills"],
+            "Mizoram": ["Aizawl", "Lunglei", "Champhai", "Serchhip", "Kolasib"],
+            "Nagaland": ["Dimapur", "Kohima", "Mokokchung", "Tuensang", "Wokha"],
+            "Odisha": ["Bhubaneswar", "Cuttack", "Sambalpur", "Rourkela", "Berhampur"],
+            "Punjab": ["Amritsar", "Ludhiana", "Patiala", "Jalandhar", "Bathinda"],
+            "Rajasthan": ["Jaipur", "Jodhpur", "Udaipur", "Ajmer", "Kota"],
+            "Sikkim": ["East Sikkim", "West Sikkim", "North Sikkim", "South Sikkim"],
+            "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Salem", "Tiruchirappalli"],
+            "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar", "Khammam"],
+            "Tripura": ["Agartala", "Dharmanagar", "Kailasahar", "Udaipur", "Khowai"],
+            "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Meerut"],
+            "West Bengal": ["Kolkata", "Darjeeling", "Howrah", "Siliguri", "Durgapur"],
+            // ... (other states and districts)
+        };
+    
+        function populateDropdowns() {
+            const stateSelect = document.getElementById('state');
+            Object.keys(stateDistricts).forEach(state => {
+                const option = document.createElement('option');
+                option.value = state;
+                option.textContent = state;
+                stateSelect.appendChild(option);
+            });
+    
+            // Add event listener for state change
+            stateSelect.addEventListener('change', function () {
+                const districtSelect = document.getElementById('district');
+                districtSelect.innerHTML = ''; // Clear previous options
+    
+                const selectedState = this.value;
+                if (selectedState && stateDistricts[selectedState]) {
+                    stateDistricts[selectedState].forEach(district => {
+                        const option = document.createElement('option');
+                        option.value = district;
+                        option.textContent = district;
+                        districtSelect.appendChild(option);
+                    });
+                }
+            });
+        }
+    
+        function requestLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+            } else {
+                document.getElementById("location-message").innerText = "Geolocation is not supported by this browser.";
+            }
+        }
+    
+        function successCallback(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`)
+    .then(response => response.json())
+    .then(data => {
+        const address = data.address;
+
+        if (address.state) {
+            const stateSelect = document.getElementById('state');
+            stateSelect.value = address.state;
+
+            // Trigger change event to populate district dropdown
+            stateSelect.dispatchEvent(new Event('change'));
+
+            const districtSelect = document.getElementById('district');
+
+            // Normalize district names from the dropdown and API response for comparison
+            const possibleDistricts = [
+                address.county,
+                address.city,
+                address.town,
+                address.village,
+                address.state_district // Some APIs return this key for districts
+            ].map(d => d ? d.toLowerCase().replace(/\s+/g, '') : '');
+
+            let matchedDistrict = '';
+
+            // Get district options from the dropdown
+            const districtOptions = Array.from(districtSelect.options).map(option => ({
+                value: option.value,
+                normalized: option.value.toLowerCase().replace(/\s+/g, '')
+            }));
+
+            // Try to match normalized API district with the dropdown districts
+            for (let possibleDistrict of possibleDistricts) {
+                if (possibleDistrict) {
+                    const match = districtOptions.find(option => option.normalized === possibleDistrict);
+                    if (match) {
+                        matchedDistrict = match.value;
+                        break;
+                    }
+                }
+            }
+
+            // Set the district if matched, otherwise prompt the user to select manually
+            if (matchedDistrict) {
+                districtSelect.value = matchedDistrict;
+                document.getElementById("location-message").innerText = `Location detected successfully: ${address.state}, ${matchedDistrict}.`;
+            } else {
+                document.getElementById("location-message").innerText = "Location detected but district not matched. Please select manually.";
+            }
+        } else {
+            document.getElementById("location-message").innerText = "Location not found. Please enter manually.";
+        }
+    })
+    .catch((error) => {
+        console.error("Error retrieving location:", error);
+        document.getElementById("location-message").innerText = "Error retrieving location. Please enter manually.";
+    });
+
+}
+
+        function errorCallback(error) {
+            let message;
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    message = "Location access denied. Please enter your state and district manually.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    message = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    message = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    message = "An unknown error occurred.";
+                    break;
+            }
+            document.getElementById("location-message").innerText = message;
+        }
+    
+        // Combine window.onload to execute both functions
+        window.onload = function () {
+            populateDropdowns();
+            requestLocation();
+        };
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
